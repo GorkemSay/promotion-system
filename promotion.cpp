@@ -1,7 +1,12 @@
 #include <iostream>
 using namespace std;
 
-class Employee{
+class developer{};
+class AbstractEmployee{
+    virtual void askForPromotion() = 0;
+};
+class Employee : AbstractEmployee{
+protected:    
     string Name;
     string Department;
     string Relation;
@@ -60,6 +65,13 @@ public:
         }else{
             cout << "Sorry, " << Name << " does not deserve a promotion." << endl;
         }
+    }
+ };
+class developer : Employee{
+public:
+    string programmingLanguages;
+    developer(string name, string department, string relation, int experience, int age, string programminglanguages):Employee(name, department, relation, experience, age){
+        programmingLanguages = programminglanguages;
     }
  };   
 int main(){
