@@ -1,35 +1,79 @@
 #include <iostream>
+#include <vector>
 using namespace std;
 
-class developer{};
+// Enumeration for employee  relations
+enum class Relation{
+    Excellent,
+    Good,
+    Average,
+    Poor,
+    Bad
+};
+
+// Enumeration for department
+enum class Department{
+    Mobile,
+    Web,
+    HR,
+    Sales,
+    Management
+};
+
+// Abstract class for askForPromotion function
 class AbstractEmployee{
     virtual void askForPromotion() = 0;
 };
+class EmployeeManager{
+private:
+    vector<Employee> employees;
+public:
+    void addEmployee(const Employee& employee){
+        employees.push_back(employee);
+    }
+
+    void displayEmployees(){
+        for(const auto& employee : employees){
+            employee.staffInformation();
+            cout << "- - - - - - - - -" << endl;
+        }
+    }
+
+    void checkPromotion(){
+        for(auto & employee : employees){
+            employee.askForPromotion();
+        }
+    }
+};
 class Employee : AbstractEmployee{
-protected:    
+private:    
     string Name;
-    string Department;
-    string Relation;
+    Department employeeDepartment;
+    Relation employeeRelation;
     int Experience;
     int Age;
 public:
+    // Constructor with initialization list
+    Employee(string name, Department department, Relation relation, int experience, int age)
+    : Name(name), employeeDepartment(department), employeeRelation(relation), Experience(experience), Age(age){
+    }
     void setName(string name){
         Name = name;
     }
     string getName(){
         return Name;
     }
-    void setDepartment(string department){
-        Department = department;
+    void setDepartment(Department department){
+        employeeDepartment = department;
     }
-    string getDepartment(){
-        return Department;
+    Department getDepartment(){
+        return employeeDepartment;
     }
-    void setRelation(string relation){
-        Relation = relation;
+    void setRelation(Relation relation) {
+        employeeRelation = relation;
     }
-    string getRelation(){
-        return Relation;
+    Relation getRelation() {
+        return employeeRelation;
     }
     void setExperience(int experience){
         Experience = experience;
@@ -45,38 +89,27 @@ public:
     int getAge(){
         return Age;
     }
-    void staffInformation(){
+    // Display staff information
+    void staffInformation() const {
         cout << "Name: " << Name << endl;
-        cout << "Department: " << Department << endl;
-        cout << "Relation: " << Relation << endl;
+        cout << "Department: " << static_cast<int>(employeeDepartment) << endl;
+        cout << "Relation: " << static_cast<int>(employeeRelation) << endl;
         cout << "Experience: " << Experience << endl;
         cout << "Age: " << Age << endl; 
     }
-    Employee(string name, string department, string relation, int experience, int age){
-        Name = name;
-        Department = department;
-        Relation = relation;
-        Experience = experience;
-        Age = age;
-    }
+    // Check eligibility for promotion
     void askForPromotion(){
-        if(Age >= 18 && Relation == "Good" && Experience >= 3){
+        if(Age >= 18 && employeeRelation == Relation::Good && Experience >= 3){
             cout << Name << " deserves a promotion." << endl;
         }else{
             cout << "Sorry, " << Name << " does not deserve a promotion." << endl;
         }
     }
- };
-class developer : Employee{
-public:
-    string programmingLanguages;
-    developer(string name, string department, string relation, int experience, int age, string programminglanguages):Employee(name, department, relation, experience, age){
-        programmingLanguages = programminglanguages;
-    }
  };   
 int main(){
-    Employee emp1 = Employee("Gorkem", "Mobile", "Good", 2, 27);
-    Employee emp2 = Employee("Furkan", "IT", "Good", 4, 29);
+    EmployeeManager manager;
+    Employee emp1 = Employee("Gorkem", Department::Mobile, Relation::Good, 2, 27);
+    Employee emp2 = Employee("Furkan", Department::Web, Relation::Good, 4, 29);
     emp1.askForPromotion();
     emp2.askForPromotion();
 }
