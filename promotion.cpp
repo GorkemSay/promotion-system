@@ -28,18 +28,21 @@ class EmployeeManager{
 private:
     vector<Employee> employees;
 public:
+    // Add an employee to manager
     void addEmployee(const Employee& employee){
         employees.push_back(employee);
     }
 
-    void displayEmployees(){
+    // Display information for all employees
+    void displayAllEmployees(){
         for(const auto& employee : employees){
             employee.staffInformation();
             cout << "- - - - - - - - -" << endl;
         }
     }
 
-    void checkPromotion(){
+    // Chech promotion eligibility for all employees
+    void checkPromotions(){
         for(auto & employee : employees){
             employee.askForPromotion();
         }
@@ -112,4 +115,9 @@ int main(){
     Employee emp2 = Employee("Furkan", Department::Web, Relation::Good, 4, 29);
     emp1.askForPromotion();
     emp2.askForPromotion();
+    manager.addEmployee(Employee("Gorkem", Department::Mobile, Relation::Good, 2, 27));
+    manager.addEmployee(Employee("Furkan", Department::Web, Relation::Good, 4, 29));
+
+    manager.displayAllEmployees();
+    manager.checkPromotions();
 }
