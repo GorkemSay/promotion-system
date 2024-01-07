@@ -24,30 +24,6 @@ enum class Department{
 class AbstractEmployee{
     virtual void askForPromotion() = 0;
 };
-class EmployeeManager{
-private:
-    vector<Employee> employees;
-public:
-    // Add an employee to manager
-    void addEmployee(const Employee& employee){
-        employees.push_back(employee);
-    }
-
-    // Display information for all employees
-    void displayAllEmployees(){
-        for(const auto& employee : employees){
-            employee.staffInformation();
-            cout << "- - - - - - - - -" << endl;
-        }
-    }
-
-    // Chech promotion eligibility for all employees
-    void checkPromotions(){
-        for(auto & employee : employees){
-            employee.askForPromotion();
-        }
-    }
-};
 class Employee : AbstractEmployee{
 private:    
     string Name;
@@ -108,7 +84,31 @@ public:
             cout << "Sorry, " << Name << " does not deserve a promotion." << endl;
         }
     }
- };   
+ };
+class EmployeeManager{
+private:
+    vector<Employee> employees;
+public:
+    // Add an employee to manager
+    void addEmployee(const Employee& employee){
+        employees.push_back(employee);
+    }
+
+    // Display information for all employees
+    void displayAllEmployees(){
+        for(const auto& employee : employees){
+            employee.staffInformation();
+            cout << "- - - - - - - - -" << endl;
+        }
+    }
+
+    // Chech promotion eligibility for all employees
+    void checkPromotions(){
+        for(auto & employee : employees){
+            employee.askForPromotion();
+        }
+    }
+};   
 int main(){
     EmployeeManager manager;
     Employee emp1 = Employee("Gorkem", Department::Mobile, Relation::Good, 2, 27);
