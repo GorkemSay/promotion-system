@@ -25,7 +25,7 @@ class AbstractEmployee{
     virtual void askForPromotion() = 0;
 };
 class Employee : AbstractEmployee{
-private:    
+protected:    
     string Name;
     Department employeeDepartment;
     Relation employeeRelation;
@@ -84,6 +84,27 @@ public:
             cout << "Sorry, " << Name << " does not deserve a promotion." << endl;
         }
     }
+    virtual void Work(){
+        cout << Name << ": " << "is working." << endl;
+    }
+ };
+   // Engineers class inherited from Employee class
+  // For obtain specific developer things
+ // Like programming languages or frameworks
+ class Engineers : public Employee{
+public:
+    string ProgrammingLanguages;
+    Engineers(string name, Department department, Relation relation, int experience, int age, string programming_languages)
+    : Employee(name, department, relation, experience, age){
+        ProgrammingLanguages = programming_languages;
+    }
+    void Work(){
+        cout << Name << ": is writing " << ProgrammingLanguages << " code" << endl;
+    }
+ };
+ class Human_Resources : public Employee{
+public:
+string performance_metric;
  };
 class EmployeeManager{
 private:
@@ -111,7 +132,9 @@ public:
 };   
 int main(){
     EmployeeManager manager;
-    Employee emp1 = Employee("Gorkem", Department::Mobile, Relation::Good, 2, 27);
+    Engineers emp1 = Engineers("Gorkem", Department::Mobile, Relation::Good, 2, 27, "Swift");
+    Employee *e = &emp1;
+    emp1->Work();
     Employee emp2 = Employee("Furkan", Department::Web, Relation::Good, 4, 29);
     emp1.askForPromotion();
     emp2.askForPromotion();
